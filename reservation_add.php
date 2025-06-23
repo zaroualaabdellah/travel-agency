@@ -1,6 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) header('Location: login.php');
 
 $pageTitle = "Ajouter Réservation";
 include('includes/header.php');

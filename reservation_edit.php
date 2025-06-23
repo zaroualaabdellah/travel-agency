@@ -1,6 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) header('Location: login.php');
 
 $pageTitle = "Modifier Réservation";
 include('includes/header.php');

@@ -1,6 +1,8 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 250px; height: 100vh; position: fixed;">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 250px; height: 100vh; position: fixed; overflow-y: auto;">
   <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-    <span class="fs-5 fw-semibold">Admin Panel</span>
+    <span class="fs-5 fw-semibold">
+      <img src="image/images.png">
+    </span>
   </a>
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">

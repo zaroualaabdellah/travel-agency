@@ -1,7 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) header('Location: login.php');
-
 $pageTitle = "Modifier Point de Départ";
 include('includes/header.php');
 include('includes/sidebar.php');

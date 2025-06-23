@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if (isset($error)): ?>
                         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                     <?php endif; ?>
-
+                     <img src="image/images.png" style="width:100%;">   
                     <form method="post">
                         <div class="mb-3">
                             <label for="username" class="form-label">Nom d'utilisateur</label>
@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <button type="submit" class="btn btn-primary w-100">Se connecter</button>
                     </form>
+                    <h4>created by Rekabi and Ghomari</h4>
                 </div>
             </div>
         </div>

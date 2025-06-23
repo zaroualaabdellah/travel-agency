@@ -1,6 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['user']) ) header('Location: login.php');
 
 $pageTitle = "Liste des Utilisateurs";
 include('includes/header.php');
