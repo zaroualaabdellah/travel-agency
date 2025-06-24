@@ -1,9 +1,9 @@
 <?php
-$pageTitle = "Modifier un Voyage";
+$pageTitle = "Modifier un voyage";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (!isset($_GET['id'])) {
@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 
 $error = "";
 
-$result = $conn->query("SELECT * FROM Voyage WHERE id_voyage = $id");
+$result = $conn->query("SELECT * FROM voyage WHERE id_voyage = $id");
 if ($result->num_rows === 0) {
     header("Location: voyage.php");
     exit;
@@ -26,7 +26,7 @@ $type_voyage = $voyage['type_voyage'];
 $pension = $voyage['pension'];
 $id_hotel = $voyage['id_hotel'];
 
-$hotelResult = $conn->query("SELECT id_hotel, nom FROM Hotel ORDER BY nom");
+$hotelResult = $conn->query("SELECT id_hotel, nom FROM hotel ORDER BY nom");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $libelle = trim($_POST['libelle']);
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($libelle === "" || $type_voyage === "" || $pension === "" || $id_hotel <= 0) {
         $error = "Tous les champs sont obligatoires.";
     } else {
-        $stmt = $conn->prepare("UPDATE Voyage SET libelle = ?, type_voyage = ?, pension = ?, id_hotel = ? WHERE id_voyage = ?");
+        $stmt = $conn->prepare("UPDATE voyage SET libelle = ?, type_voyage = ?, pension = ?, id_hotel = ? WHERE id_voyage = ?");
         $stmt->bind_param("sssii", $libelle, $type_voyage, $pension, $id_hotel, $id);
         if ($stmt->execute()) {
             header("Location: voyage.php");
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mb-3">
-      <label for="type_voyage" class="form-label">Type de Voyage</label>
+      <label for="type_voyage" class="form-label">Type de voyage</label>
       <input type="text" id="type_voyage" name="type_voyage" class="form-control" required value="<?= htmlspecialchars($type_voyage) ?>" />
     </div>
 

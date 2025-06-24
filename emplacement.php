@@ -3,22 +3,22 @@ $pageTitle = "Liste des Emplacements";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Emplacement WHERE id_emplacement = $id");
+    $conn->query("DELETE FROM emplacement WHERE id_emplacement = $id");
     header("Location: emplacement.php");
     exit;
 }
 
-// Join with Autocar to display bus info
+// Join with autocar to display bus info
 $result = $conn->query("
     SELECT e.id_emplacement, e.numero, a.immatriculation, t.nom_type
-    FROM Emplacement e
-    JOIN Autocar a ON e.id_autocar = a.id_autocar
-    JOIN TypeAutocar t ON a.id_type = t.id_type
+    FROM emplacement e
+    JOIN autocar a ON e.id_autocar = a.id_autocar
+    JOIN typeautocar t ON a.id_type = t.id_type
     ORDER BY e.id_emplacement DESC
 ");
 ?>
@@ -26,7 +26,7 @@ $result = $conn->query("
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="topbar d-flex justify-content-between align-items-center">
     <h4><?= $pageTitle ?></h4>
-    <a href="emplacement_add.php" class="btn btn-primary btn-sm">Ajouter un Emplacement</a>
+    <a href="emplacement_add.php" class="btn btn-primary btn-sm">Ajouter un emplacement</a>
   </div>
 
   <div class="content mt-4">
@@ -35,8 +35,8 @@ $result = $conn->query("
         <tr>
           <th>ID</th>
           <th>Numéro</th>
-          <th>Autocar</th>
-          <th>Type d'Autocar</th>
+          <th>autocar</th>
+          <th>Type d'autocar</th>
           <th>Actions</th>
         </tr>
       </thead>

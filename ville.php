@@ -3,20 +3,20 @@ $pageTitle = "Liste des Villes";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Ville WHERE id_ville = $id");
+    $conn->query("DELETE FROM ville WHERE id_ville = $id");
     header("Location: ville.php");
     exit;
 }
 
 $result = $conn->query("
   SELECT v.id_ville, v.nom, v.code_postal, d.nom AS nom_dep
-  FROM Ville v
-  JOIN Departement d ON v.id_dep = d.id_dep
+  FROM ville v
+  JOIN departement d ON v.id_dep = d.id_dep
   ORDER BY v.id_ville DESC
 ");
 ?>
@@ -24,7 +24,7 @@ $result = $conn->query("
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="topbar d-flex justify-content-between align-items-center">
     <h4><?= $pageTitle ?></h4>
-    <a href="ville_add.php" class="btn btn-primary btn-sm">Ajouter une Ville</a>
+    <a href="ville_add.php" class="btn btn-primary btn-sm">Ajouter une ville</a>
   </div>
 
   <div class="content mt-4">

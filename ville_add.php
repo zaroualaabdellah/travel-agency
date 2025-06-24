@@ -1,18 +1,18 @@
 <?php
-$pageTitle = "Ajouter une Ville";
+$pageTitle = "Ajouter une ville";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
-$departements = $conn->query("SELECT id_dep, nom FROM Departement");
+$departements = $conn->query("SELECT id_dep, nom FROM departement");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $conn->real_escape_string($_POST['nom']);
     $code_postal = $conn->real_escape_string($_POST['code_postal']);
     $id_dep = intval($_POST['id_dep']);
-    $conn->query("INSERT INTO Ville (nom, code_postal, id_dep) VALUES ('$nom', '$code_postal', $id_dep)");
+    $conn->query("INSERT INTO ville (nom, code_postal, id_dep) VALUES ('$nom', '$code_postal', $id_dep)");
     header("Location: ville.php");
     exit;
 }
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="content mt-4">
     <form method="post">
       <div class="mb-3">
-        <label>Nom de la Ville</label>
+        <label>Nom de la ville</label>
         <input type="text" name="nom" class="form-control" required>
       </div>
       <div class="mb-3">

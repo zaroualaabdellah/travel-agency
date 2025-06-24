@@ -1,14 +1,14 @@
 <?php
  
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die($conn->connect_error);
 
-$pageTitle = "Ajouter un Client";
+$pageTitle = "Ajouter un client";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$villes = $conn->query("SELECT id_ville, nom FROM Ville");
+$villes = $conn->query("SELECT id_ville, nom FROM ville");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $conn->real_escape_string($_POST['nom']);
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_ville = intval($_POST['id_ville']);
 
     $conn->query("
-      INSERT INTO Client (nom, prenom, genre, adresse, id_ville)
+      INSERT INTO client (nom, prenom, genre, adresse, id_ville)
       VALUES ('$nom', '$prenom', '$genre', '$adresse', $id_ville)");
 
     $id_client = $conn->insert_id;
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $role = 'client';
         $conn->query("
-          INSERT INTO Utilisateur (id_client, username, mot_de_passe, role)
+          INSERT INTO utilisateur (id_client, username, mot_de_passe, role)
           VALUES ($id_client, '$username', '$hash', '$role')");
     }
 
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <input type="text" name="adresse" class="form-control">
     </div>
     <div class="mb-3">
-      <label>Ville</label>
+      <label>ville</label>
       <select name="id_ville" class="form-select" required>
         <option value="">-- Choisir --</option>
         <?php while ($v = $villes->fetch_assoc()): ?>

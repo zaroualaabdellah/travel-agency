@@ -3,20 +3,20 @@ $pageTitle = "Liste des Régions";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Region WHERE id_region = $id");
+    $conn->query("DELETE FROM region WHERE id_region = $id");
     header("Location: region.php");
     exit;
 }
 
 $result = $conn->query("
   SELECT r.id_region, r.nom AS nom_region, p.nom AS nom_pays
-  FROM Region r
-  JOIN Pays p ON r.id_pays = p.id_pays
+  FROM region r
+  JOIN pays p ON r.id_pays = p.id_pays
   ORDER BY r.id_region DESC
 ");
 ?>
@@ -33,7 +33,7 @@ $result = $conn->query("
         <tr>
           <th>ID</th>
           <th>Nom de la Région</th>
-          <th>Pays</th>
+          <th>pays</th>
           <th>Actions</th>
         </tr>
       </thead>

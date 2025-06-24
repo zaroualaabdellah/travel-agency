@@ -1,16 +1,16 @@
 <?php
-$pageTitle = "Ajouter un Emplacement";
+$pageTitle = "Ajouter un emplacement";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 $numero = "";
 $id_autocar = 0;
 $error = "";
 
-$autocarResult = $conn->query("SELECT id_autocar, immatriculation FROM Autocar ORDER BY immatriculation");
+$autocarResult = $conn->query("SELECT id_autocar, immatriculation FROM autocar ORDER BY immatriculation");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numero = intval($_POST['numero']);
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Le numéro et l'autocar sont obligatoires et doivent être valides.";
     } else {
         // Check if seat number already exists for this bus to avoid duplicates
-        $stmtCheck = $conn->prepare("SELECT COUNT(*) FROM Emplacement WHERE numero = ? AND id_autocar = ?");
+        $stmtCheck = $conn->prepare("SELECT COUNT(*) FROM emplacement WHERE numero = ? AND id_autocar = ?");
         $stmtCheck->bind_param("ii", $numero, $id_autocar);
         $stmtCheck->execute();
         $stmtCheck->bind_result($count);
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($count > 0) {
             $error = "Ce numéro d'emplacement existe déjà pour cet autocar.";
         } else {
-            $stmt = $conn->prepare("INSERT INTO Emplacement (numero, id_autocar) VALUES (?, ?)");
+            $stmt = $conn->prepare("INSERT INTO emplacement (numero, id_autocar) VALUES (?, ?)");
             $stmt->bind_param("ii", $numero, $id_autocar);
             if ($stmt->execute()) {
                 header("Location: emplacement.php");
@@ -50,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php endif; ?>
   <form method="post" action="">
     <div class="mb-3">
-      <label for="numero" class="form-label">Numéro d'Emplacement</label>
+      <label for="numero" class="form-label">Numéro d'emplacement</label>
       <input type="number" id="numero" name="numero" class="form-control" required value="<?= htmlspecialchars($numero) ?>" min="1" />
     </div>
     <div class="mb-3">
-      <label for="id_autocar" class="form-label">Autocar</label>
+      <label for="id_autocar" class="form-label">autocar</label>
       <select id="id_autocar" name="id_autocar" class="form-select" required>
         <option value="">-- Choisir un autocar --</option>
         <?php while ($autocar = $autocarResult->fetch_assoc()): ?>

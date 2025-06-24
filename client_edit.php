@@ -1,19 +1,19 @@
 <?php
  
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die($conn->connect_error);
 
 if (!isset($_GET['id'])) { header('Location: client.php'); exit; }
 $id = intval($_GET['id']);
 
-$pageTitle = "Modifier Client";
+$pageTitle = "Modifier client";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$client = $conn->query("SELECT * FROM Client WHERE id_client = $id")->fetch_assoc();
-$account = $conn->query("SELECT * FROM Utilisateur WHERE id_client = $id")->fetch_assoc();
-$villes = $conn->query("SELECT id_ville, nom FROM Ville");
+$client = $conn->query("SELECT * FROM client WHERE id_client = $id")->fetch_assoc();
+$account = $conn->query("SELECT * FROM utilisateur WHERE id_client = $id")->fetch_assoc();
+$villes = $conn->query("SELECT id_ville, nom FROM ville");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $conn->real_escape_string($_POST['nom']);
@@ -22,13 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $adresse = $conn->real_escape_string($_POST['adresse']);
     $id_ville = intval($_POST['id_ville']);
     $conn->query("
-      UPDATE Client SET nom='$nom', prenom='$prenom', genre='$genre', adresse='$adresse', id_ville=$id_ville
+      UPDATE client SET nom='$nom', prenom='$prenom', genre='$genre', adresse='$adresse', id_ville=$id_ville
       WHERE id_client = $id");
 
     if (!empty($_POST['password'])) {
         $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $conn->query("
-          UPDATE Utilisateur SET mot_de_passe='$hash'
+          UPDATE utilisateur SET mot_de_passe='$hash'
           WHERE id_client = $id");
     }
 
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="mb-3"><label>Adresse</label><input type="text" name="adresse" value="<?= htmlspecialchars($client['adresse']) ?>" class="form-control"></div>
     <div class="mb-3">
-      <label>Ville</label>
+      <label>ville</label>
       <select name="id_ville" class="form-select">
         <?php while ($v = $villes->fetch_assoc()): ?>
         <option value="<?= $v['id_ville'] ?>" <?= $client['id_ville']==$v['id_ville']?'selected':'' ?>><?= htmlspecialchars($v['nom']) ?></option>

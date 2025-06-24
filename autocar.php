@@ -3,20 +3,20 @@ $pageTitle = "Liste des Autocars";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Autocar WHERE id_autocar = $id");
+    $conn->query("DELETE FROM autocar WHERE id_autocar = $id");
     header("Location: autocar.php");
     exit;
 }
 
 $result = $conn->query("
   SELECT a.id_autocar, a.immatriculation, t.nom_type
-  FROM Autocar a
-  JOIN TypeAutocar t ON a.id_type = t.id_type
+  FROM autocar a
+  JOIN typeautocar t ON a.id_type = t.id_type
   ORDER BY a.id_autocar DESC
 ");
 ?>
@@ -24,7 +24,7 @@ $result = $conn->query("
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="topbar d-flex justify-content-between align-items-center">
     <h4><?= $pageTitle ?></h4>
-    <a href="autocar_add.php" class="btn btn-primary btn-sm">Ajouter un Autocar</a>
+    <a href="autocar_add.php" class="btn btn-primary btn-sm">Ajouter un autocar</a>
   </div>
 
   <div class="content mt-4">
@@ -33,7 +33,7 @@ $result = $conn->query("
         <tr>
           <th>ID</th>
           <th>Immatriculation</th>
-          <th>Type d'Autocar</th>
+          <th>Type d'autocar</th>
           <th>Actions</th>
         </tr>
       </thead>

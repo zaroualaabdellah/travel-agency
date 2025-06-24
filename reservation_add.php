@@ -4,11 +4,11 @@ $pageTitle = "Ajouter Réservation";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 // Fetch clients for dropdown
-$clientsRes = $conn->query("SELECT id_client, nom, prenom FROM Client ORDER BY nom, prenom");
+$clientsRes = $conn->query("SELECT id_client, nom, prenom FROM client ORDER BY nom, prenom");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date_reservation = $_POST['date_reservation'] ?? null;
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chambre_supplementaire = isset($_POST['chambre_supplementaire']) ? 1 : 0;
     $id_client = intval($_POST['id_client']);
 
-    $stmt = $conn->prepare("INSERT INTO Reservation (date_reservation, assurance_annulation, chambre_supplementaire, id_client) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO reservation (date_reservation, assurance_annulation, chambre_supplementaire, id_client) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("siii", $date_reservation, $assurance_annulation, $chambre_supplementaire, $id_client);
 
     if ($stmt->execute()) {
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <label for="chambre_supplementaire" class="form-check-label">Chambre supplémentaire</label>
     </div>
     <div class="mb-3">
-      <label for="id_client" class="form-label">Client</label>
+      <label for="id_client" class="form-label">client</label>
       <select name="id_client" id="id_client" class="form-select" required>
         <option value="">-- Sélectionner un client --</option>
         <?php while ($client = $clientsRes->fetch_assoc()): ?>

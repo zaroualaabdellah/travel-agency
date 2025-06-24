@@ -1,25 +1,25 @@
 <?php
-$pageTitle = "Liste des Types d'Autocar";
+$pageTitle = "Liste des Types d'autocar";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM TypeAutocar WHERE id_type = $id");
+    $conn->query("DELETE FROM typeautocar WHERE id_type = $id");
     header("Location: typeautocar.php");
     exit;
 }
 
-$result = $conn->query("SELECT id_type, nom_type, description FROM TypeAutocar ORDER BY id_type DESC");
+$result = $conn->query("SELECT id_type, nom_type, description FROM typeautocar ORDER BY id_type DESC");
 ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="topbar d-flex justify-content-between align-items-center">
     <h4><?= $pageTitle ?></h4>
-    <a href="typeautocar_add.php" class="btn btn-primary btn-sm">Ajouter un Type d'Autocar</a>
+    <a href="typeautocar_add.php" class="btn btn-primary btn-sm">Ajouter un Type d'autocar</a>
   </div>
 
   <div class="content mt-4">

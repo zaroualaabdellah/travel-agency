@@ -4,15 +4,15 @@ $pageTitle = "Liste des Réservations";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    // Delete Passager(s) linked to reservation first (if any)
-    $conn->query("DELETE FROM Passager WHERE id_reservation = $id");
+    // Delete passager(s) linked to reservation first (if any)
+    $conn->query("DELETE FROM passager WHERE id_reservation = $id");
     // Then delete the reservation itself
-    $conn->query("DELETE FROM Reservation WHERE id_reservation = $id");
+    $conn->query("DELETE FROM reservation WHERE id_reservation = $id");
     header("Location: reservation.php");
     exit;
 }
@@ -20,8 +20,8 @@ if (isset($_GET['delete'])) {
 $sql = "
 SELECT r.id_reservation, r.date_reservation, r.assurance_annulation, r.chambre_supplementaire,
        c.nom AS client_nom, c.prenom AS client_prenom
-FROM Reservation r
-JOIN Client c ON r.id_client = c.id_client
+FROM reservation r
+JOIN client c ON r.id_client = c.id_client
 ORDER BY r.id_reservation DESC
 ";
 

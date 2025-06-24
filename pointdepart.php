@@ -4,7 +4,7 @@ $pageTitle = "Liste des Points de Départ";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
@@ -17,11 +17,11 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
-// Fetch points with city names (join Ville)
+// Fetch points with city names (join ville)
 $sql = "
 SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom
 FROM PointDepart p
-JOIN Ville v ON p.id_ville = v.id_ville
+JOIN ville v ON p.id_ville = v.id_ville
 ORDER BY p.id_point_depart DESC
 ";
 $result = $conn->query($sql);
@@ -39,7 +39,7 @@ $result = $conn->query($sql);
         <tr>
           <th>ID</th>
           <th>Lieu</th>
-          <th>Ville</th>
+          <th>ville</th>
           <th>Actions</th>
         </tr>
       </thead>

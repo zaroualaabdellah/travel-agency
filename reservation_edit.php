@@ -4,7 +4,7 @@ $pageTitle = "Modifier Réservation";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 $id = intval($_GET['id'] ?? 0);
@@ -14,10 +14,10 @@ if ($id <= 0) {
 }
 
 // Fetch clients for dropdown
-$clientsRes = $conn->query("SELECT id_client, nom, prenom FROM Client ORDER BY nom, prenom");
+$clientsRes = $conn->query("SELECT id_client, nom, prenom FROM client ORDER BY nom, prenom");
 
 // Fetch reservation info
-$stmt = $conn->prepare("SELECT * FROM Reservation WHERE id_reservation = ?");
+$stmt = $conn->prepare("SELECT * FROM reservation WHERE id_reservation = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $reservation = $stmt->get_result()->fetch_assoc();
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chambre_supplementaire = isset($_POST['chambre_supplementaire']) ? 1 : 0;
     $id_client = intval($_POST['id_client']);
 
-    $stmtUpdate = $conn->prepare("UPDATE Reservation SET date_reservation = ?, assurance_annulation = ?, chambre_supplementaire = ?, id_client = ? WHERE id_reservation = ?");
+    $stmtUpdate = $conn->prepare("UPDATE reservation SET date_reservation = ?, assurance_annulation = ?, chambre_supplementaire = ?, id_client = ? WHERE id_reservation = ?");
     $stmtUpdate->bind_param("siiii", $date_reservation, $assurance_annulation, $chambre_supplementaire, $id_client, $id);
 
     if ($stmtUpdate->execute()) {
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <label for="chambre_supplementaire" class="form-check-label">Chambre supplémentaire</label>
     </div>
     <div class="mb-3">
-      <label for="id_client" class="form-label">Client</label>
+      <label for="id_client" class="form-label">client</label>
       <select name="id_client" id="id_client" class="form-select" required>
         <option value="">-- Sélectionner un client --</option>
         <?php while ($client = $clientsRes->fetch_assoc()): ?>

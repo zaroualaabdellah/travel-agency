@@ -1,9 +1,9 @@
 <?php
-$pageTitle = "Modifier un Autocar";
+$pageTitle = "Modifier un autocar";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (!isset($_GET['id'])) {
@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 
 $error = "";
 
-$result = $conn->query("SELECT * FROM Autocar WHERE id_autocar = $id");
+$result = $conn->query("SELECT * FROM autocar WHERE id_autocar = $id");
 if ($result->num_rows === 0) {
     header("Location: autocar.php");
     exit;
@@ -24,7 +24,7 @@ $autocar = $result->fetch_assoc();
 $immatriculation = $autocar['immatriculation'];
 $id_type = $autocar['id_type'];
 
-$typeResult = $conn->query("SELECT id_type, nom_type FROM TypeAutocar ORDER BY nom_type");
+$typeResult = $conn->query("SELECT id_type, nom_type FROM typeautocar ORDER BY nom_type");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $immatriculation = trim($_POST['immatriculation']);
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($immatriculation === "" || $id_type <= 0) {
         $error = "Immatriculation et type sont obligatoires.";
     } else {
-        $stmt = $conn->prepare("UPDATE Autocar SET immatriculation = ?, id_type = ? WHERE id_autocar = ?");
+        $stmt = $conn->prepare("UPDATE autocar SET immatriculation = ?, id_type = ? WHERE id_autocar = ?");
         $stmt->bind_param("sii", $immatriculation, $id_type, $id);
         if ($stmt->execute()) {
             header("Location: autocar.php");
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <input type="text" id="immatriculation" name="immatriculation" class="form-control" required value="<?= htmlspecialchars($immatriculation) ?>" />
     </div>
     <div class="mb-3">
-      <label for="id_type" class="form-label">Type d'Autocar</label>
+      <label for="id_type" class="form-label">Type d'autocar</label>
       <select id="id_type" name="id_type" class="form-select" required>
         <option value="">-- Choisir un type --</option>
         <?php while ($type = $typeResult->fetch_assoc()): ?>

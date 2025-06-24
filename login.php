@@ -1,17 +1,17 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $conn->real_escape_string($_POST['username']);
     $pwd = $_POST['password'];
 
-    $res = $conn->query("SELECT * FROM Utilisateur WHERE username='$user' AND actif=1");
+    $res = $conn->query("SELECT * FROM utilisateur WHERE username='$user' AND actif=1");
 
     if ($r = $res->fetch_assoc()) {
         if (password_verify($pwd, $r['mot_de_passe'])) {
             $_SESSION['user'] = ['id' => $r['id_utilisateur'], 'role' => $r['role']];
-            header('Location: client.php'); exit;
+            header('Location: index.php'); exit;
         } else {
             $error = "Identifiants invalides.";
         }

@@ -3,15 +3,15 @@ $pageTitle = "Ajouter une Région";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
-$paysList = $conn->query("SELECT id_pays, nom FROM Pays");
+$paysList = $conn->query("SELECT id_pays, nom FROM pays");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $conn->real_escape_string($_POST['nom']);
     $id_pays = intval($_POST['id_pays']);
-    $conn->query("INSERT INTO Region (nom, id_pays) VALUES ('$nom', $id_pays)");
+    $conn->query("INSERT INTO region (nom, id_pays) VALUES ('$nom', $id_pays)");
     header("Location: region.php");
     exit;
 }
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="nom" class="form-control" required>
       </div>
       <div class="mb-3">
-        <label>Pays</label>
+        <label>pays</label>
         <select name="id_pays" class="form-select" required>
           <option value="">-- Choisir un pays --</option>
           <?php while ($p = $paysList->fetch_assoc()): ?>

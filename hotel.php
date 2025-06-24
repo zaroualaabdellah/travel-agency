@@ -3,20 +3,20 @@ $pageTitle = "Liste des Hôtels";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Hotel WHERE id_hotel = $id");
+    $conn->query("DELETE FROM hotel WHERE id_hotel = $id");
     header("Location: hotel.php");
     exit;
 }
 
 $result = $conn->query("
   SELECT h.id_hotel, h.nom, h.adresse, v.nom AS ville
-  FROM Hotel h
-  LEFT JOIN Ville v ON h.id_ville = v.id_ville
+  FROM hotel h
+  LEFT JOIN ville v ON h.id_ville = v.id_ville
   ORDER BY h.id_hotel DESC
 ");
 ?>
@@ -34,7 +34,7 @@ $result = $conn->query("
           <th>ID</th>
           <th>Nom</th>
           <th>Adresse</th>
-          <th>Ville</th>
+          <th>ville</th>
           <th>Actions</th>
         </tr>
       </thead>

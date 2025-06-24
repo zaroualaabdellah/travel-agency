@@ -1,9 +1,9 @@
 <?php
-$pageTitle = "Modifier un Type d'Autocar";
+$pageTitle = "Modifier un Type d'autocar";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (!isset($_GET['id'])) {
@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 
 $error = "";
 
-$result = $conn->query("SELECT * FROM TypeAutocar WHERE id_type = $id");
+$result = $conn->query("SELECT * FROM typeautocar WHERE id_type = $id");
 if ($result->num_rows === 0) {
     header("Location: typeautocar.php");
     exit;
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($nom_type === "") {
         $error = "Le nom du type est obligatoire.";
     } else {
-        $stmt = $conn->prepare("UPDATE TypeAutocar SET nom_type = ?, description = ? WHERE id_type = ?");
+        $stmt = $conn->prepare("UPDATE typeautocar SET nom_type = ?, description = ? WHERE id_type = ?");
         $stmt->bind_param("ssi", $nom_type, $description, $id);
         if ($stmt->execute()) {
             header("Location: typeautocar.php");

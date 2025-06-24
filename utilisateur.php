@@ -4,17 +4,17 @@ $pageTitle = "Liste des Utilisateurs";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if (isset($_GET['toggle'])) {
     $id = intval($_GET['toggle']);
-    $conn->query("UPDATE Utilisateur SET actif = NOT actif WHERE id_utilisateur = $id");
+    $conn->query("UPDATE utilisateur SET actif = NOT actif WHERE id_utilisateur = $id");
     header('Location: utilisateur.php');
     exit;
 }
 $sql = "
 SELECT u.id_utilisateur, u.username, u.role, u.actif, c.nom, c.prenom
-FROM Utilisateur u
-JOIN Client c ON u.id_client = c.id_client";
+FROM utilisateur u
+JOIN client c ON u.id_client = c.id_client";
 $res = $conn->query($sql);
 ?>
 
@@ -27,7 +27,7 @@ $res = $conn->query($sql);
     <tr>
       <th>ID</th>
       <th>Username</th>
-      <th>Client</th>
+      <th>client</th>
       <th>Rôle</th>
       <th>Actif</th>
       <th>Actions</th>

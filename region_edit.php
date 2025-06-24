@@ -3,17 +3,17 @@ $pageTitle = "Modifier une Région";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 $id = intval($_GET['id']);
-$region = $conn->query("SELECT * FROM Region WHERE id_region = $id")->fetch_assoc();
-$paysList = $conn->query("SELECT id_pays, nom FROM Pays");
+$region = $conn->query("SELECT * FROM region WHERE id_region = $id")->fetch_assoc();
+$paysList = $conn->query("SELECT id_pays, nom FROM pays");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $conn->real_escape_string($_POST['nom']);
     $id_pays = intval($_POST['id_pays']);
-    $conn->query("UPDATE Region SET nom = '$nom', id_pays = $id_pays WHERE id_region = $id");
+    $conn->query("UPDATE region SET nom = '$nom', id_pays = $id_pays WHERE id_region = $id");
     header("Location: region.php");
     exit;
 }
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="nom" class="form-control" value="<?= htmlspecialchars($region['nom']) ?>" required>
       </div>
       <div class="mb-3">
-        <label>Pays</label>
+        <label>pays</label>
         <select name="id_pays" class="form-select" required>
           <?php while ($p = $paysList->fetch_assoc()): ?>
             <option value="<?= $p['id_pays'] ?>" <?= $region['id_pays'] == $p['id_pays'] ? 'selected' : '' ?>>

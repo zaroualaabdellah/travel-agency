@@ -4,12 +4,12 @@ $pageTitle = "Liste des Passagers";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Passager WHERE id_passager = $id");
+    $conn->query("DELETE FROM passager WHERE id_passager = $id");
     header("Location: passager.php");
     exit;
 }
@@ -17,10 +17,10 @@ if (isset($_GET['delete'])) {
 $sql = "
 SELECT p.id_passager, p.nom, p.prenom, p.telephone, r.id_reservation, r.date_reservation, c.nom AS client_nom, c.prenom AS client_prenom,
        e.numero AS emplacement_numero
-FROM Passager p
-JOIN Reservation r ON p.id_reservation = r.id_reservation
-JOIN Client c ON r.id_client = c.id_client
-JOIN Emplacement e ON p.id_emplacement = e.id_emplacement
+FROM passager p
+JOIN reservation r ON p.id_reservation = r.id_reservation
+JOIN client c ON r.id_client = c.id_client
+JOIN emplacement e ON p.id_emplacement = e.id_emplacement
 ORDER BY p.id_passager DESC
 ";
 $result = $conn->query($sql);
@@ -29,7 +29,7 @@ $result = $conn->query($sql);
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="topbar d-flex justify-content-between align-items-center">
     <h4><?= $pageTitle ?></h4>
-    <a href="passager_add.php" class="btn btn-primary btn-sm">Ajouter Passager</a>
+    <a href="passager_add.php" class="btn btn-primary btn-sm">Ajouter passager</a>
   </div>
   <div class="content mt-4">
     <table id="passagerTable" class="table table-striped table-bordered">
@@ -40,9 +40,9 @@ $result = $conn->query($sql);
           <th>Prénom</th>
           <th>Téléphone</th>
           <th>Réservation (ID)</th>
-          <th>Client</th>
+          <th>client</th>
           <th>Date réservation</th>
-          <th>Emplacement (N°)</th>
+          <th>emplacement (N°)</th>
           <th>Actions</th>
         </tr>
       </thead>

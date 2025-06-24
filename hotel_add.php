@@ -3,7 +3,7 @@ $pageTitle = "Ajouter un Hôtel";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 $nom = "";
@@ -11,7 +11,7 @@ $adresse = "";
 $id_ville = 0;
 $error = "";
 
-$villeResult = $conn->query("SELECT id_ville, nom FROM Ville ORDER BY nom");
+$villeResult = $conn->query("SELECT id_ville, nom FROM ville ORDER BY nom");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = trim($_POST['nom']);
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($nom === "" || $adresse === "" || $id_ville <= 0) {
         $error = "Tous les champs sont obligatoires.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO Hotel (nom, adresse, id_ville) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO hotel (nom, adresse, id_ville) VALUES (?, ?, ?)");
         $stmt->bind_param("ssi", $nom, $adresse, $id_ville);
         if ($stmt->execute()) {
             header("Location: hotel.php");
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mb-3">
-      <label for="id_ville" class="form-label">Ville</label>
+      <label for="id_ville" class="form-label">ville</label>
       <select id="id_ville" name="id_ville" class="form-select" required>
         <option value="">-- Choisir une ville --</option>
         <?php while ($ville = $villeResult->fetch_assoc()): ?>

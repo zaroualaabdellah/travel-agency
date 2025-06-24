@@ -3,20 +3,20 @@ $pageTitle = "Liste des Voyages";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Voyage WHERE id_voyage = $id");
+    $conn->query("DELETE FROM voyage WHERE id_voyage = $id");
     header("Location: voyage.php");
     exit;
 }
 
 $result = $conn->query("
   SELECT v.id_voyage, v.libelle, v.type_voyage, v.pension, h.nom AS hotel
-  FROM Voyage v
-  JOIN Hotel h ON v.id_hotel = h.id_hotel
+  FROM voyage v
+  JOIN hotel h ON v.id_hotel = h.id_hotel
   ORDER BY v.id_voyage DESC
 ");
 ?>
@@ -24,7 +24,7 @@ $result = $conn->query("
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="topbar d-flex justify-content-between align-items-center">
     <h4><?= $pageTitle ?></h4>
-    <a href="voyage_add.php" class="btn btn-primary btn-sm">Ajouter un Voyage</a>
+    <a href="voyage_add.php" class="btn btn-primary btn-sm">Ajouter un voyage</a>
   </div>
 
   <div class="content mt-4">

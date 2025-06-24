@@ -11,7 +11,7 @@
         🏠 Dashboard
       </a>
     </li>
-    <li><a href="pays.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'pays.php' ? 'active' : 'link-dark' ?>">🌍 Pays</a></li>
+    <li><a href="pays.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'pays.php' ? 'active' : 'link-dark' ?>">🌍 pays</a></li>
     <li><a href="region.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'region.php' ? 'active' : 'link-dark' ?>">🗺️ Régions</a></li>
     <li><a href="departement.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'departement.php' ? 'active' : 'link-dark' ?>">🏞️ Départements</a></li>
     <li><a href="ville.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'ville.php' ? 'active' : 'link-dark' ?>">🏘️ Villes</a></li>
@@ -28,7 +28,7 @@
     <a href="voyage.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'voyage.php' ? 'active' : 'link-dark' ?>">✈️ Voyages</a>
     </li>
     <li>
-        <a href="programmation.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'programmation.php' ? 'active' : 'link-dark' ?>">🕒 Programmation</a>
+        <a href="programmation.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'programmation.php' ? 'active' : 'link-dark' ?>">🕒 programmation</a>
         </li>
     <li>
     <a href="pointdepart.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'pointdepart.php' ? 'active' : 'link-dark' ?>">📍 Point de départ</a>

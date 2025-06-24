@@ -1,9 +1,9 @@
 <?php
-$pageTitle = "Modifier un Emplacement";
+$pageTitle = "Modifier un emplacement";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (!isset($_GET['id'])) {
@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 
 $error = "";
 
-$result = $conn->query("SELECT * FROM Emplacement WHERE id_emplacement = $id");
+$result = $conn->query("SELECT * FROM emplacement WHERE id_emplacement = $id");
 if ($result->num_rows === 0) {
     header("Location: emplacement.php");
     exit;
@@ -24,7 +24,7 @@ $emplacement = $result->fetch_assoc();
 $numero = $emplacement['numero'];
 $id_autocar = $emplacement['id_autocar'];
 
-$autocarResult = $conn->query("SELECT id_autocar, immatriculation FROM Autocar ORDER BY immatriculation");
+$autocarResult = $conn->query("SELECT id_autocar, immatriculation FROM autocar ORDER BY immatriculation");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numero = intval($_POST['numero']);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Le numéro et l'autocar sont obligatoires et doivent être valides.";
     } else {
         // Check duplicate seat number for the bus excluding current record
-        $stmtCheck = $conn->prepare("SELECT COUNT(*) FROM Emplacement WHERE numero = ? AND id_autocar = ? AND id_emplacement != ?");
+        $stmtCheck = $conn->prepare("SELECT COUNT(*) FROM emplacement WHERE numero = ? AND id_autocar = ? AND id_emplacement != ?");
         $stmtCheck->bind_param("iii", $numero, $id_autocar, $id);
         $stmtCheck->execute();
         $stmtCheck->bind_result($count);
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($count > 0) {
             $error = "Ce numéro d'emplacement existe déjà pour cet autocar.";
         } else {
-            $stmt = $conn->prepare("UPDATE Emplacement SET numero = ?, id_autocar = ? WHERE id_emplacement = ?");
+            $stmt = $conn->prepare("UPDATE emplacement SET numero = ?, id_autocar = ? WHERE id_emplacement = ?");
             $stmt->bind_param("iii", $numero, $id_autocar, $id);
             if ($stmt->execute()) {
                 header("Location: emplacement.php");
@@ -64,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php endif; ?>
   <form method="post" action="">
     <div class="mb-3">
-      <label for="numero" class="form-label">Numéro d'Emplacement</label>
+      <label for="numero" class="form-label">Numéro d'emplacement</label>
       <input type="number" id="numero" name="numero" class="form-control" required value="<?= htmlspecialchars($numero) ?>" min="1" />
     </div>
     <div class="mb-3">
-      <label for="id_autocar" class="form-label">Autocar</label>
+      <label for="id_autocar" class="form-label">autocar</label>
       <select id="id_autocar" name="id_autocar" class="form-select" required>
         <option value="">-- Choisir un autocar --</option>
         <?php while ($autocar = $autocarResult->fetch_assoc()): ?>

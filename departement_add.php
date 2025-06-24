@@ -3,16 +3,16 @@ $pageTitle = "Ajouter un Département";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
-$regions = $conn->query("SELECT id_region, nom FROM Region");
+$regions = $conn->query("SELECT id_region, nom FROM region");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $conn->real_escape_string($_POST['nom']);
     $code = $conn->real_escape_string($_POST['code']);
     $id_region = intval($_POST['id_region']);
-    $conn->query("INSERT INTO Departement (nom, code, id_region) VALUES ('$nom', '$code', $id_region)");
+    $conn->query("INSERT INTO departement (nom, code, id_region) VALUES ('$nom', '$code', $id_region)");
     header("Location: departement.php");
     exit;
 }

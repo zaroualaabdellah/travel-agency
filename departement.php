@@ -3,20 +3,20 @@ $pageTitle = "Liste des Départements";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM Departement WHERE id_dep = $id");
+    $conn->query("DELETE FROM departement WHERE id_dep = $id");
     header("Location: departement.php");
     exit;
 }
 
 $result = $conn->query("
   SELECT d.id_dep, d.nom, d.code, r.nom AS nom_region
-  FROM Departement d
-  JOIN Region r ON d.id_region = r.id_region
+  FROM departement d
+  JOIN region r ON d.id_region = r.id_region
   ORDER BY d.id_dep DESC
 ");
 ?>

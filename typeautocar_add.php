@@ -1,9 +1,9 @@
 <?php
-$pageTitle = "Ajouter un Type d'Autocar";
+$pageTitle = "Ajouter un Type d'autocar";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 $nom_type = $description = "";
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($nom_type === "") {
         $error = "Le nom du type est obligatoire.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO TypeAutocar (nom_type, description) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO typeautocar (nom_type, description) VALUES (?, ?)");
         $stmt->bind_param("ss", $nom_type, $description);
         if ($stmt->execute()) {
             header("Location: typeautocar.php");

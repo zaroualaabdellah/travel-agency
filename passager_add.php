@@ -1,22 +1,22 @@
 <?php
 
-$pageTitle = "Ajouter Passager";
+$pageTitle = "Ajouter passager";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 // Fetch reservations for dropdown
 $reservationsRes = $conn->query("
   SELECT r.id_reservation, r.date_reservation, c.nom, c.prenom
-  FROM Reservation r
-  JOIN Client c ON r.id_client = c.id_client
+  FROM reservation r
+  JOIN client c ON r.id_client = c.id_client
   ORDER BY r.date_reservation DESC
 ");
 
 // Fetch emplacements for dropdown
-$emplacementsRes = $conn->query("SELECT id_emplacement, numero FROM Emplacement ORDER BY numero");
+$emplacementsRes = $conn->query("SELECT id_emplacement, numero FROM emplacement ORDER BY numero");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = trim($_POST['nom'] ?? '');
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($nom === '' || $prenom === '' || $id_reservation <= 0 || $id_emplacement <= 0) {
         $error = "Nom, prénom, réservation et emplacement sont obligatoires.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO Passager (nom, prenom, telephone, id_reservation, id_emplacement) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO passager (nom, prenom, telephone, id_reservation, id_emplacement) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssii", $nom, $prenom, $telephone, $id_reservation, $id_emplacement);
         if ($stmt->execute()) {
             header("Location: passager.php");
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </select>
     </div>
     <div class="mb-3">
-      <label for="id_emplacement" class="form-label">Emplacement (N°)</label>
+      <label for="id_emplacement" class="form-label">emplacement (N°)</label>
       <select name="id_emplacement" id="id_emplacement" class="form-select" >
         <option value="">-- Sélectionner un emplacement --</option>
         <?php while ($emplacement = $emplacementsRes->fetch_assoc()): ?>

@@ -3,7 +3,7 @@ $pageTitle = "Modifier Point de Départ";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (!isset($_GET['id'])) {
@@ -30,7 +30,7 @@ $lieu = $point['lieu'];
 $id_ville = $point['id_ville'];
 
 // Fetch villes for select dropdown
-$villeResult = $conn->query("SELECT id_ville, nom FROM Ville ORDER BY nom");
+$villeResult = $conn->query("SELECT id_ville, nom FROM ville ORDER BY nom");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lieu = trim($_POST['lieu'] ?? "");
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mb-3">
-      <label for="id_ville" class="form-label">Ville</label>
+      <label for="id_ville" class="form-label">ville</label>
       <select id="id_ville" name="id_ville" class="form-select" required>
         <option value="">-- Choisir une ville --</option>
         <?php while ($ville = $villeResult->fetch_assoc()): ?>

@@ -1,10 +1,10 @@
 <?php
 
-$pageTitle = "Modifier Programmation";
+$pageTitle = "Modifier programmation";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 if (!isset($_GET['id'])) {
@@ -16,7 +16,7 @@ $id = intval($_GET['id']);
 $error = "";
 
 // Fetch existing programmation data
-$stmt = $conn->prepare("SELECT * FROM Programmation WHERE id_programmation = ?");
+$stmt = $conn->prepare("SELECT * FROM programmation WHERE id_programmation = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -33,9 +33,9 @@ $prix_base = $prog['prix_base'];
 $id_voyage = $prog['id_voyage'];
 
 // Fetch voyages, autocars, and points depart for selects
-$voyages = $conn->query("SELECT id_voyage, libelle FROM Voyage ORDER BY libelle");
-$autocars = $conn->query("SELECT a.id_autocar, a.immatriculation, t.nom_type FROM Autocar a JOIN TypeAutocar t ON a.id_type = t.id_type ORDER BY a.immatriculation");
-$points = $conn->query("SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom FROM PointDepart p JOIN Ville v ON p.id_ville = v.id_ville ORDER BY p.lieu");
+$voyages = $conn->query("SELECT id_voyage, libelle FROM voyage ORDER BY libelle");
+$autocars = $conn->query("SELECT a.id_autocar, a.immatriculation, t.nom_type FROM autocar a JOIN typeautocar t ON a.id_type = t.id_type ORDER BY a.immatriculation");
+$points = $conn->query("SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom FROM PointDepart p JOIN ville v ON p.id_ville = v.id_ville ORDER BY p.lieu");
 
 // Fetch selected autocars and points
 $selected_autocars = [];
@@ -60,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$date_depart || !$date_retour || !$prix_base || $id_voyage <= 0) {
         $error = "Tous les champs sont obligatoires.";
     } else {
-        // Update Programmation
-        $stmt = $conn->prepare("UPDATE Programmation SET date_depart = ?, date_retour = ?, prix_base = ?, id_voyage = ? WHERE id_programmation = ?");
+        // Update programmation
+        $stmt = $conn->prepare("UPDATE programmation SET date_depart = ?, date_retour = ?, prix_base = ?, id_voyage = ? WHERE id_programmation = ?");
         $stmt->bind_param("ssdii", $date_depart, $date_retour, $prix_base, $id_voyage, $id);
         if ($stmt->execute()) {
             // Update many-to-many autocars
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mb-3">
-      <label for="id_voyage" class="form-label">Voyage</label>
+      <label for="id_voyage" class="form-label">voyage</label>
       <select id="id_voyage" name="id_voyage" class="form-select" required>
         <option value="">-- Choisir un voyage --</option>
         <?php while ($v = $voyages->fetch_assoc()): ?>

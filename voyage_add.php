@@ -1,9 +1,9 @@
 <?php
-$pageTitle = "Ajouter un Voyage";
+$pageTitle = "Ajouter un voyage";
 include('includes/header.php');
 include('includes/sidebar.php');
 
-$conn = new mysqli("localhost", "root", "", "dbtravel");
+$conn = new mysqli("sql202.infinityfree.com", "if0_39302602", "jT4CeZzfz4", "if0_39302602_dbtravel");
 if ($conn->connect_error) die("Erreur: " . $conn->connect_error);
 
 $libelle = "";
@@ -12,7 +12,7 @@ $pension = "";
 $id_hotel = 0;
 $error = "";
 
-$hotelResult = $conn->query("SELECT id_hotel, nom FROM Hotel ORDER BY nom");
+$hotelResult = $conn->query("SELECT id_hotel, nom FROM hotel ORDER BY nom");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $libelle = trim($_POST['libelle']);
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($libelle === "" || $type_voyage === "" || $pension === "" || $id_hotel <= 0) {
         $error = "Tous les champs sont obligatoires.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO Voyage (libelle, type_voyage, pension, id_hotel) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO voyage (libelle, type_voyage, pension, id_hotel) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("sssi", $libelle, $type_voyage, $pension, $id_hotel);
         if ($stmt->execute()) {
             header("Location: voyage.php");
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mb-3">
-      <label for="type_voyage" class="form-label">Type de Voyage</label>
+      <label for="type_voyage" class="form-label">Type de voyage</label>
       <input type="text" id="type_voyage" name="type_voyage" class="form-control" required value="<?= htmlspecialchars($type_voyage) ?>" />
     </div>
 
