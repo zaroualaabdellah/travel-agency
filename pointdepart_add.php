@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$lieu || $id_ville <= 0) {
         $error = "Tous les champs sont obligatoires.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO PointDepart (lieu, id_ville) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO pointdepart (lieu, id_ville) VALUES (?, ?)");
         $stmt->bind_param("si", $lieu, $id_ville);
         if ($stmt->execute()) {
             header("Location: pointdepart.php");

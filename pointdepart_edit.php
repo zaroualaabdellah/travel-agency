@@ -15,7 +15,7 @@ $id = intval($_GET['id']);
 $error = "";
 
 // Fetch existing pointdepart
-$stmt = $conn->prepare("SELECT * FROM PointDepart WHERE id_point_depart = ?");
+$stmt = $conn->prepare("SELECT * FROM pointdepart WHERE id_point_depart = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $res = $stmt->get_result();
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$lieu || $id_ville <= 0) {
         $error = "Tous les champs sont obligatoires.";
     } else {
-        $stmt = $conn->prepare("UPDATE PointDepart SET lieu = ?, id_ville = ? WHERE id_point_depart = ?");
+        $stmt = $conn->prepare("UPDATE pointdepart SET lieu = ?, id_ville = ? WHERE id_point_depart = ?");
         $stmt->bind_param("sii", $lieu, $id_ville, $id);
         if ($stmt->execute()) {
             header("Location: pointdepart.php");

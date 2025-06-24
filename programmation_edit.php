@@ -35,7 +35,7 @@ $id_voyage = $prog['id_voyage'];
 // Fetch voyages, autocars, and points depart for selects
 $voyages = $conn->query("SELECT id_voyage, libelle FROM voyage ORDER BY libelle");
 $autocars = $conn->query("SELECT a.id_autocar, a.immatriculation, t.nom_type FROM autocar a JOIN typeautocar t ON a.id_type = t.id_type ORDER BY a.immatriculation");
-$points = $conn->query("SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom FROM PointDepart p JOIN ville v ON p.id_ville = v.id_ville ORDER BY p.lieu");
+$points = $conn->query("SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom FROM pointdepart p JOIN ville v ON p.id_ville = v.id_ville ORDER BY p.lieu");
 
 // Fetch selected autocars and points
 $selected_autocars = [];

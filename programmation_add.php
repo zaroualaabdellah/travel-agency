@@ -18,7 +18,7 @@ $error = "";
 // Fetch voyages, autocars, and points depart for selects
 $voyages = $conn->query("SELECT id_voyage, libelle FROM voyage ORDER BY libelle");
 $autocars = $conn->query("SELECT a.id_autocar, a.immatriculation, t.nom_type FROM autocar a JOIN typeautocar t ON a.id_type = t.id_type ORDER BY a.immatriculation");
-$points = $conn->query("SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom FROM PointDepart p JOIN ville v ON p.id_ville = v.id_ville ORDER BY p.lieu");
+$points = $conn->query("SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom FROM pointdepart p JOIN ville v ON p.id_ville = v.id_ville ORDER BY p.lieu");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date_depart = $_POST['date_depart'] ?? "";
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt2->close();
             }
 
-            // Insert many-to-many for PointDepart
+            // Insert many-to-many for pointdepart
             if (!empty($selected_points)) {
                 $stmt3 = $conn->prepare("INSERT INTO Programmation_PointDepart (id_programmation, id_point_depart) VALUES (?, ?)");
                 foreach ($selected_points as $id_point) {

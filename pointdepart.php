@@ -12,7 +12,7 @@ if (isset($_GET['delete'])) {
     // Delete linked programmation_pointdepart rows first (FK constraint)
     $conn->query("DELETE FROM Programmation_PointDepart WHERE id_point_depart = $id");
     // Then delete pointdepart
-    $conn->query("DELETE FROM PointDepart WHERE id_point_depart = $id");
+    $conn->query("DELETE FROM pointdepart WHERE id_point_depart = $id");
     header("Location: pointdepart.php");
     exit;
 }
@@ -20,7 +20,7 @@ if (isset($_GET['delete'])) {
 // Fetch points with city names (join ville)
 $sql = "
 SELECT p.id_point_depart, p.lieu, v.nom AS ville_nom
-FROM PointDepart p
+FROM pointdepart p
 JOIN ville v ON p.id_ville = v.id_ville
 ORDER BY p.id_point_depart DESC
 ";
